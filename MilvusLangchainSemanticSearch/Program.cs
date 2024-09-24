@@ -1,7 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using MilvusLangchainSemanticSearch.Controllers;
+
 namespace MilvusLangchainSemanticSearch;
 
 public class Program
 {
+    [Experimental("SKEXP0020")]
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +16,8 @@ public class Program
             .AddSwaggerGen()!
             .AddControllers();
 
+        builder.Services.AddMilvus(builder.Configuration);
+        
         builder.Services.AddSingleton<SemanticSearchService>();
         
         var app = builder.Build();
